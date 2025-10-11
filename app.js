@@ -1,11 +1,29 @@
+require('dotenv').config();
 const express = require('express');
-const app = express();
-const port = 3000;
+const db = require('./config/db');
+const ErrorResponse = require('./utils/errorResponse');
+const errorHandler = require('./middleware/errorHandler');
 
-app.get('/', (req, res) => {
-  res.send('Hello, Mini Task API Team!');
+// นำเข้า Route files
+const users = require('./routes/userRoutes');
+const tasks = require('./routes/taskRoutes')
+
+const app = express();
+
+// Body parser middleware
+app.use(express.json());
+
+// Mount routers
+app.use('/api/v1/users', users); 
+app.use('/api/v1/tasks', tasks);
+app.use((req, res, next) => {
+  next(new ErrorResponse(`ไม่พบ URL ที่เรียกใช้งาน - ${req.originalUrl}`, 404));
 });
 
+app.use(errorHandler);
+
+const port = 3000;
+
 app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${3000}`);
+  console.log(`Server is running at http://localhost:3000`);
 });
