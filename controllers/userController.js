@@ -1,3 +1,4 @@
+const db = require('../config/db');
 exports.getUsers = (req, res, next) => {
   res.status(200).json({ success: true, msg: 'Show all users' });
 };
@@ -22,6 +23,17 @@ exports.updateUser = (req, res, next) => {
 
 
 // @route   DELETE /api/v1/users/:id
-exports.deleteUser = (req, res, next) => {
-  res.status(200).json({ success: true, msg: `Delete user ${req.params.id}` });
+exports.deleteUser = async (req, res, next) => {
+    try {
+        const sql = 'DELETE FROM users WHERE id = ?';
+        const [result] = await db.query(sql, [req.params.id]);
+
+        if (result.affectedRows === 0) {
+            return next(new ErrorResponse(`User not found with id of ${req.params.id}`, 404));
+        }
+
+        res.status(200).json({ success: true, data: {} });
+    } catch (err) {
+        next(err);
+    }
 };

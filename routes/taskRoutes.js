@@ -14,17 +14,17 @@ const { protect } = require('../middleware/auth');
 
 // Route สำหรับ /api/v1/tasks
 router.route('/')
-  .get(getTasks)
-  .post(createTask);
+  .get(protect,getTasks)
+  .post(protect,createTask);
 
 // Route สำหรับ /api/v1/tasks/:id
 router.route('/:id')
-  .get(getTask)
-  .put(updateTask)
-  .delete(deleteTask);
+  .get(protect,getTask)
+  .put(protect,updateTask)
+  .delete(protect,deleteTask);
 
 // Route เฉพาะสำหรับเปลี่ยน status
 router.route('/:id/status')
-    .patch(updateTaskStatus);
+    .patch(protect,updateTaskStatus);
 
 module.exports = router;
