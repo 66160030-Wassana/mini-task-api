@@ -10,6 +10,7 @@ const {
 } = require('../controllers/taskController');
 
 const router = express.Router();
+const { protect } = require('../middleware/auth');
 
 // Route สำหรับ /api/v1/tasks
 router.route('/')
