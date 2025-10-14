@@ -1,4 +1,3 @@
-// routes/taskRoutes.js
 const express = require('express');
 const {
   getTasks,
@@ -9,8 +8,9 @@ const {
   deleteTask,
 } = require('../controllers/taskController');
 
-const router = express.Router();
 const { protect } = require('../middleware/auth');
+const router = express.Router();
+
 
 // Route สำหรับ /api/v1/tasks
 router.route('/')
