@@ -85,7 +85,7 @@
     DB_HOST=localhost
     DB_USER=root
     DB_PASSWORD=your_mysql_password # <-- ใส่รหัสผ่าน MySQL ของคุณ (ถ้าไม่มีให้เว้นว่าง)
-    DB_DATABASE=mini_task_api
+    DB_DATABASE=mini-task-api
 
     JWT_SECRET=your_super_secret_key
     JWT_EXPIRE=30d
