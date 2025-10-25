@@ -1,22 +1,71 @@
-// (ในไฟล์ controllers/taskControllerV2.js)
 
-// @route   GET /api/v2/tasks
 exports.getTasks = (req, res, next) => {
-  // V2 จะส่งข้อความกลับไปต่างจาก V1
-  res.status(200).json({ 
-    success: true, 
-    version: 'v2-lite',
-    msg: 'Show all tasks (V2 - No Description)' 
-  });
+  // ...
 };
 
-// @route   GET /api/v2/tasks/:id
 exports.getTask = (req, res, next) => {
-  res.status(200).json({ 
-    success: true, 
+  // ...
+};
+
+// ▼▼▼ [สำคัญ] เพิ่มฟังก์ชัน createTask ที่ขาดไป ▼▼▼
+/**
+ * @desc    Create new task (V2)
+ * @route   POST /api/v2/tasks
+ * @access  Private
+ */
+exports.createTask = (req, res, next) => {
+
+  const { title } = req.body;
+  const user = req.user;
+
+  res.status(201).json({
+    success: true,
     version: 'v2-lite',
-    msg: `Show task ${req.params.id} (V2)` 
+    message: `Task (V2) created by ${user.name}`,
+    data: {
+      title: title,
+      status: 'pending',
+    },
   });
 };
 
-// (ฟังก์ชันอื่นๆ เช่น createTask, updateTask ปล่อยไว้เหมือนเดิมก่อน)
+/**
+ * @desc    Update a task (V2)
+ * @route   PUT /api/v2/tasks/:id
+ * @access  Private
+ */
+exports.updateTask = (req, res, next) => {
+  res.status(200).json({
+    success: true,
+    version: 'v2-lite',
+    message: `Task ${req.params.id} updated (V2 Stub)`,
+    data: req.body,
+  });
+};
+
+/**
+ * @desc    Delete a task (V2)
+ * @route   DELETE /api/v2/tasks/:id
+ * @access  Private
+ */
+exports.deleteTask = (req, res, next) => {
+  res.status(200).json({
+    success: true,
+    version: 'v2-lite',
+    message: `Task ${req.params.id} deleted (V2 Stub)`,
+    data: {},
+  });
+};
+
+/**
+ * @desc    Update task status (V2)
+ * @route   PATCH /api/v2/tasks/:id/status
+ * @access  Private
+ */
+exports.updateTaskStatus = (req, res, next) => {
+  res.status(200).json({
+    success: true,
+    version: 'v2-lite',
+    message: `Task ${req.params.id} status updated to '${req.body.status}' (V2 Stub)`,
+  });
+};

@@ -1,6 +1,5 @@
-// ในไฟล์ routes/taskRoutes.js
 const express = require('express');
-const { /* ... controllers ... */ } = require('../controllers/taskControllerV2');
+const { getTasks,getTask,createTask,updateTask,deleteTask,updateTaskStatus} = require('../controllers/taskControllerV2');
 const { protect } = require('../middleware/auth');
 const { checkTaskAccess } = require('../middleware/checkTaskAccess');
 
