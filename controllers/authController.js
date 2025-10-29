@@ -60,7 +60,7 @@ exports.login = async (req, res, next) => {
         const user = users[0];
 
         // 3. เปรียบเทียบรหัสผ่านที่ส่งมากับรหัสผ่านที่ hash ไว้ใน DB
-        const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = password === user.password;
 
         // 4. ถ้ารหัสผ่านไม่ตรงกัน
         if (!isMatch) {
