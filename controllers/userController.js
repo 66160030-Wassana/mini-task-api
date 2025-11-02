@@ -1,6 +1,20 @@
 const db = require('../config/db');
-exports.getUsers = (req, res, next) => {
-  res.status(200).json({ success: true, msg: 'Show all users' });
+const ErrorResponse = require('../utils/errorResponse');
+exports.getUsers = async (req, res, next) => {
+  try {
+    const sql = 'SELECT id, name, email, role, isPremium, createdAt FROM users';
+    
+    const [users] = await db.query(sql);
+
+    res.status(200).json({ 
+      success: true, 
+      count: users.length,
+      data: users
+    });
+
+  } catch (err) {
+    next(err);
+  }
 };
 
 
@@ -36,4 +50,51 @@ exports.deleteUser = async (req, res, next) => {
     } catch (err) {
         next(err);
     }
+};
+
+exports.getMe = async (req, res, next) => {
+  try {
+    // เราได้ req.user.id มาจาก middleware 'protect'
+    // เราจะดึงข้อมูล user ที่ "ไม่มีรหัสผ่าน" กลับไป
+    const sql = 'SELECT id, name, email, role, isPremium, subscriptionExpiry, createdAt FROM users WHERE id = ?';
+    const [users] = await db.query(sql, [req.user.id]);
+
+    if (users.length === 0) {
+      return next(new ErrorResponse('User not found', 404));
+    }
+
+    res.status(200).json({
+      success: true,
+      data: users[0]
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.updateMe = async (req, res, next) => {
+  // ‼️ นี่คือฟังก์ชันตัวอย่างสำหรับอัปเดต 'name'
+  [cite_start]// โจทย์ไม่ได้บังคับว่าต้องอัปเดตอะไรบ้าง [cite: 87-89]
+  
+  const { name } = req.body;
+  const userId = req.user.id; // จาก middleware 'protect'
+
+  if (!name) {
+     return next(new ErrorResponse('Please provide a name to update', 400));
+  }
+
+  try {
+    const sql = 'UPDATE users SET name = ? WHERE id = ?';
+    await db.query(sql, [name, userId]);
+    
+    // ดึงข้อมูลใหม่มาแสดง
+    const [updatedUsers] = await db.query('SELECT id, name, email, role FROM users WHERE id = ?', [userId]);
+
+    res.status(200).json({
+      success: true,
+      data: updatedUsers[0]
+    });
+  } catch (err) {
+    next(err);
+  }
 };

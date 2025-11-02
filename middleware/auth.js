@@ -17,7 +17,12 @@ exports.protect = async (req, res, next) => {
     // ตรวจสอบความถูกต้องของ token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    req.user = { id: decoded.id, role: decoded.role, name: 'Test User' };
+    req.user = { 
+        id: decoded.userId,
+        email: decoded.email,
+        role: decoded.role, 
+        isPremium: decoded.isPremium
+    };
 
     next();
   } catch (err) {

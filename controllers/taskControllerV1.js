@@ -47,7 +47,7 @@ exports.createTask = asyncHandler(async (req, res, next) => {
 
   // เช็กสิทธิ์การสร้าง High priority task
   if (priority === 'high') {
-    if (user.role !== 'premium' && user.role !== 'admin') {
+    if (!user.isPremium && user.role !== 'admin') {
       return next(
         new ErrorResponse(
           `User role '${user.role}' is not authorized to create a high priority task`,
@@ -144,9 +144,13 @@ exports.getTask = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`Task not found with id of ${id}`, 404));
   }
 
-  // 3. ตรวจสอบสิทธิ์ (เจ้าของ หรือ admin เท่านั้น)
-  // (ขั้นตอนนี้อาจซ้ำซ้อนกับ 'checkTaskAccess' middleware ของคุณ)
-  if (task.ownerId !== userId && userRole !== 'admin') {
+  const isPublic = task.isPublic == true; 
+  const isOwner = task.ownerId === userId;
+  const isAssignee = task.assignedTo === userId;
+  const isAdmin = userRole === 'admin';
+
+  // ถ้าไม่เข้าเงื่อนไข "สักข้อ" ในนี้ -> ห้ามเข้าถึง
+if (!isPublic && !isOwner && !isAssignee && !isAdmin) {
     return next(
       new ErrorResponse(`User not authorized to access this task`, 403)
     );
@@ -191,7 +195,7 @@ exports.updateTask = asyncHandler(async (req, res, next) => {
 
   // 4. ตรวจสอบสิทธิ์ (RBAC) ถ้ามีการพยายามอัปเกรดเป็น 'high'
   if (priority && priority === 'high' && task.priority !== 'high') {
-    if (userRole !== 'premium' && userRole !== 'admin') {
+    if (!user.isPremium && user.role !== 'admin') {
       return next(
         new ErrorResponse(
           `User role '${userRole}' is not authorized to set high priority`,

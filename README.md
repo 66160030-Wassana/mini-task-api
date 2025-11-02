@@ -51,7 +51,7 @@
 - สร้าง Database ใหม่ชื่อ mini-task-api (Collation เป็น utf8mb4_unicode_ci)
 - ไปที่แท็บ SQL แล้วรัน Script ข้างล่างนี้เพื่อสร้างตารางที่จำเป็นทั้งหมด:
     - SQL สำหรับสร้างตาราง user
-    CREATE TABLE `users` (
+CREATE TABLE `users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -65,7 +65,7 @@
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
     - SQL สำหรับสร้างตาราง tasks
-    CREATE TABLE `tasks` (
+CREATE TABLE `tasks` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -76,7 +76,39 @@
   `isPublic` tinyint(1) NOT NULL DEFAULT '0',
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  `idempotencyKey` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  -- Foreign Key เชื่อม ownerId ไปยัง users.id
+  CONSTRAINT `fk_task_owner` 
+    FOREIGN KEY (`ownerId`) 
+    REFERENCES `users` (`id`) 
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+  -- Foreign Key เชื่อม assignedTo ไปยัง users.id
+  CONSTRAINT `fk_task_assignee`
+    FOREIGN KEY (`assignedTo`)
+    REFERENCES `users` (`id`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+  UNIQUE KEY `idx_idempotency_key` (`idempotencyKey`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+    - SQL สำหรับสร้างตาราง refresh_tokens
+CREATE TABLE `refresh_tokens` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `user_id` INT NOT NULL, -- <-- แก้ไขเป็น INT
+  `token_id` VARCHAR(255) NOT NULL,
+  `expires_at` DATETIME NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  
+  INDEX (user_id),
+  UNIQUE INDEX (token_id),
+
+  -- Foreign Key เชื่อม user_id ไปยัง users.id
+  CONSTRAINT `fk_token_user`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `users` (`id`)
+    ON DELETE CASCADE -- (ถ้า user ถูกลบ, ให้ลบ token ของเขาออกไปด้วย)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 4. Environment Variables
@@ -84,11 +116,16 @@
 - คัดลอกเนื้อหาข้างล่างนี้ไปวางในไฟล์ .env 
     DB_HOST=localhost
     DB_USER=root
-    DB_PASSWORD=your_mysql_password # <-- ใส่รหัสผ่าน MySQL ของคุณ (ถ้าไม่มีให้เว้นว่าง)
+    DB_PASSWORD= # <-- ใส่รหัสผ่าน MySQL ของคุณ (ถ้าไม่มีให้เว้นว่าง)
     DB_DATABASE=mini-task-api
 
-    JWT_SECRET=your_super_secret_key
-    JWT_EXPIRE=30d
+    # สำหรับ Access Token (15 นาที)
+    JWT_SECRET=your_secret_for_access_token
+    JWT_EXPIRE=15m
+
+    # สำหรับ Refresh Token (7 วัน)
+    JWT_REFRESH_SECRET=your_DIFFERENT_secret_for_refresh_token
+    JWT_REFRESH_EXPIRE=7d
 
 5. Running Application
 - เมื่อตั้งค่าทุกอย่างสำเร็จ ให้เปิด Terminal แล้วรันคำสั่ง npm run dev
@@ -98,3 +135,4 @@ Endpoints
 - POST /api/v1/auth/login - เข้าสู่ระบบ (Body: email, password)
 - DELETE /api/v1/users/:id - (Protected, Admin only) ลบผู้ใช้งาน
 - POST /api/v1/tasks - (Protected) สร้าง Task ใหม่ (Body: title, description, priority)
+- POST /api/v1/auth/refresh - (Body: refreshToken)
