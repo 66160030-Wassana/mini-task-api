@@ -10,12 +10,15 @@ const {
   updateMe
 } = require('../controllers/userController'); 
 const { protect, authorize } = require('../middleware/auth');
-
+const { apiLimiter } = require('../middleware/rateLimiter');
 const router = express.Router();
 
+router.use(protect);
+router.use(apiLimiter);
+
 // จับคู่ Route กับ Controller
-router.route('/me').get(protect, getMe).put(protect, updateMe);
-router.route('/').get(protect, authorize('admin'), getUsers).post(protect, authorize('admin'), createUser);
-router.route('/:id').get(protect, authorize('admin'), getUser).put(protect, authorize('admin'), updateUser).delete(protect, authorize('admin'), deleteUser);
+router.route('/me').get(getMe).put(updateMe);
+router.route('/').get(authorize('admin'), getUsers).post(authorize('admin'), createUser);
+router.route('/:id').get(authorize('admin'), getUser).put(authorize('admin'), updateUser).delete(authorize('admin'), deleteUser);
 
 module.exports = router;

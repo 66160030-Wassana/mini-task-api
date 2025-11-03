@@ -19,24 +19,41 @@ exports.createTask = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse('Idempotency-Key header is required', 400));
   }
 
+  // --- 2. BUSINESS LOGIC ---
+  const { title, description, priority } = req.body;
+  const user = req.user; // มาจาก 'protect' middleware
+
   // ตรวจสอบว่า Key นี้เคยถูกใช้สร้าง Task ไปหรือยัง
-  const [existingTask] = await db.query(
+  const [existingTaskArr] = await db.query(
     'SELECT * FROM tasks WHERE idempotencyKey = ?',
     [idempotencyKey]
   );
 
   // ถ้าเคยใช้ Key นี้แล้ว -> คืนค่า Task เดิม (Idempotent response)
-  if (existingTask.length > 0) {
+  if (existingTaskArr.length > 0) {
+    const existingTask = existingTaskArr[0];
+
+    // ถ้า Key ซ้ำ แต่ Body ที่ส่งมาใหม่ (เช่น title) ไม่ตรงกับของเดิม
+    if (
+      existingTask.title !== title ||
+      existingTask.description !== description ||
+      existingTask.priority !== priority
+    ) {
+      return next(
+        new ErrorResponse(
+          'Idempotency key conflict: This key is already associated with a different request.',
+          409 // 409 Conflict
+        )
+      );
+    }
+
+    // Key ซ้ำ และ Body เหมือนเดิม -> ส่งของเก่ากลับไป
     return res.status(200).json({
       success: true,
       message: 'Request is idempotent. Returning existing task.',
-      data: existingTask[0],
+      data: existingTask,
     });
   }
-
-  // --- 2. BUSINESS LOGIC (จากโค้ดเดิมของคุณ) ---
-  const { title, description, priority } = req.body;
-  const user = req.user; // มาจาก 'protect' middleware
 
   // เช็กว่ามีข้อมูลครบ
   if (!title || !description || !priority) {
@@ -57,7 +74,7 @@ exports.createTask = asyncHandler(async (req, res, next) => {
     }
   }
 
-  // --- 3. DATABASE INSERTION (ถ้าทุกอย่างผ่าน) ---
+  // --- 3. DATABASE INSERTION ---
   const ownerId = user.id;
   const sql = `INSERT INTO tasks 
     (title, description, priority, ownerId, assignedTo, status, isPublic, idempotencyKey) 
@@ -78,23 +95,22 @@ exports.createTask = asyncHandler(async (req, res, next) => {
       result.insertId,
     ]);
 
-    // ตอบกลับว่า "สร้างสำเร็จ"
     res.status(201).json({
       success: true,
       message: 'Task created successfully',
       data: newTask[0],
     });
   } catch (err) {
-    // ดักจับขั้นสูง (เผื่อส่ง Key ซ้ำมาพร้อมกัน)
-    if (err.errno === 1062) { // 1062 = ER_DUP_ENTRY (Unique key ซ้ำ)
+    // (ส่วนนี้ของคุณถูกต้องแล้ว)
+    if (err.errno === 1062) {
       return next(
         new ErrorResponse(
           'Idempotency key conflict. Please try again with a new key.',
-          409 // 409 Conflict
+          409
         )
       );
     }
-    return next(err); // โยน Error อื่นๆ
+    return next(err);
   }
 });
 
@@ -144,13 +160,13 @@ exports.getTask = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`Task not found with id of ${id}`, 404));
   }
 
-  const isPublic = task.isPublic == true; 
+  const isPublic = task.isPublic == true;
   const isOwner = task.ownerId === userId;
   const isAssignee = task.assignedTo === userId;
   const isAdmin = userRole === 'admin';
 
   // ถ้าไม่เข้าเงื่อนไข "สักข้อ" ในนี้ -> ห้ามเข้าถึง
-if (!isPublic && !isOwner && !isAssignee && !isAdmin) {
+  if (!isPublic && !isOwner && !isAssignee && !isAdmin) {
     return next(
       new ErrorResponse(`User not authorized to access this task`, 403)
     );
