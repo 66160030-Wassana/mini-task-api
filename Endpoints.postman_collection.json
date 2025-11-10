@@ -1,0 +1,868 @@
+{
+	"info": {
+		"_postman_id": "96995e5b-3aa4-4183-9f33-2bba8e18e247",
+		"name": "Endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46759631",
+		"_collection_link": "https://sakda-5105107.postman.co/workspace/Sakda's-Workspace~c1afa352-6bc6-4b0f-88fb-da2f0c3d30ff/collection/46759631-96995e5b-3aa4-4183-9f33-2bba8e18e247?action=share&source=collection_link&creator=46759631"
+	},
+	"item": [
+		{
+			"name": "roleUser",
+			"item": [
+				{
+					"name": "/api/v1/auth/register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"manee jaide\",\r\n    \"password\": \"password123\",\r\n    \"email\": \"maneejaide@gmail.com\",\r\n    \"role\": \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/auth/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/auth/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"maneejaide@gmail.com\",\r\n    \"password\": \"password123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/users/me",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoic29tc3VramFpZGVAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpc1ByZW1pdW0iOjAsImlhdCI6MTc2MjA4OTk2NiwiZXhwIjoxNzYyMDkwODY2fQ.89361NuAJ7SBv5XFdAwN8jjtkw4oeHZieJPHtAWq1tA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/users/me",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoic29tc3VramFpZGVAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpc1ByZW1pdW0iOjAsImlhdCI6MTc2MjA4OTk2NiwiZXhwIjoxNzYyMDkwODY2fQ.89361NuAJ7SBv5XFdAwN8jjtkw4oeHZieJPHtAWq1tA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/v1/users",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/auth/refresh",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsInRva2VuSWQiOiJhYmYwZGJlZGQ5MTY5MzgyYWVmNTMxNTdmN2UwNDg3MDc3NTcyMjUzYTZkNWNjNWIyMGVjZWQyNTY5MWRjYjk1IiwiaWF0IjoxNzYyMTY0MjU4LCJleHAiOjE3NjI3NjkwNTh9.RYHX9uEAMncZY9UGg5u_wTUFWkDUkg9pSCcP8V3wRoI\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/auth/refresh",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/tasks",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsImVtYWlsIjoibWFuZWVqYWlkZUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlzUHJlbWl1bSI6MCwiaWF0IjoxNzYyMTY1MjcxLCJleHAiOjE3NjIxNjYxNzF9.4rYCFqZ887xvHoJC1AFf5IcKcprQSZJuv18DlVl74pM",
+								"type": "text"
+							},
+							{
+								"key": "Idempotency-Key",
+								"value": "abc-12345",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Test Idempotency 2\",\r\n    \"description\": \"Test Idempotency 2\",\r\n    \"priority\": \"low\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/tasks",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/tasks/1",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsImVtYWlsIjoibWFuZWVqYWlkZUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlzUHJlbWl1bSI6MCwiaWF0IjoxNzYyMTAyMzk0LCJleHAiOjE3NjIxMDMyOTR9.fxGmRiQbAixaheIHWLbFW64aL1nCM1v5aqn49zNtq3k",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/v1/tasks/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"tasks",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/tasks/4 User2",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsImVtYWlsIjoibWFuZWVqYWlkZUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlzUHJlbWl1bSI6MCwiaWF0IjoxNzYyMTAyMzk0LCJleHAiOjE3NjIxMDMyOTR9.fxGmRiQbAixaheIHWLbFW64aL1nCM1v5aqn49zNtq3k",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/v1/tasks/4",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"tasks",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/tasks/4",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoic29tc3VramFpZGVAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpc1ByZW1pdW0iOjAsImlhdCI6MTc2MjEwMjI0MCwiZXhwIjoxNzYyMTAzMTQwfQ.Ed1_oExUv68TEcv7lydoU8nak-NIEQaYZgysGArQ28M",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/v1/tasks/4",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"tasks",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/tasks/5/status เรียกใช้ 10 ครั้ง",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsImVtYWlsIjoibWFuZWVqYWlkZUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlzUHJlbWl1bSI6MCwiaWF0IjoxNzYyMTY1NzgyLCJleHAiOjE3NjIxNjY2ODJ9.kMty7K3ssPfsyV1rSEPWG_n6wvPa3HT45k7tF0ymsgo",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"status\": \"completed\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/tasks/5/status",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"tasks",
+								"5",
+								"status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "roleAdmin",
+			"item": [
+				{
+					"name": "/api/v1/auth/register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"somyom dejaimak\",\r\n    \"password\": \"password123\",\r\n    \"email\": \"somyomdejaimak@gmail.com\",\r\n    \"role\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/auth/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/auth/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"somyomdejaimak@gmail.com\",\r\n    \"password\": \"password123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoic29teW9tZGVqYWltYWtAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaXNQcmVtaXVtIjowLCJpYXQiOjE3NjIwOTE0ODMsImV4cCI6MTc2MjA5MjM4M30.H7p4ZGktoooDLkDUk3HsoaCl3eLrJSKUNc-Nw_c_Sb4",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/v1/users",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "rolePremiumFalse",
+			"item": [
+				{
+					"name": "/api/v1/auth/register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Sommai Sawutdee\",\r\n    \"email\": \"sommaisawutdee@gmail.com\",\r\n    \"password\": \"password123\",\r\n    \"role\": \"premium\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/auth/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/auth/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"sommaisawutdee@gmail.com\",\r\n    \"password\": \"password123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/tasks",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImVtYWlsIjoic29tbWFpc2F3dXRkZWVAZ21haWwuY29tIiwicm9sZSI6InByZW1pdW0iLCJpc1ByZW1pdW0iOjAsImlhdCI6MTc2MjA5NTczOSwiZXhwIjoxNzYyMDk2NjM5fQ.TzOD7t3uhHETbLMzdaJ9JERxNEckIlK9X8M4E000UKk",
+								"type": "text"
+							},
+							{
+								"key": "Idempotency-Key",
+								"value": "test-premium-0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Task (isPremium False)\",\r\n    \"description\": \"Testing creating a 'high' priority task.\",\r\n    \"priority\": \"high\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/tasks",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "rolePremiumTrue",
+			"item": [
+				{
+					"name": "/api/v1/auth/register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Somchai madee\",\r\n    \"email\": \"somchaimadee@gmail.com\",\r\n    \"password\": \"password123\",\r\n    \"role\": \"premium\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/auth/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/auth/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"somchaimadee@gmail.com\",\r\n    \"password\": \"password123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/tasks",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImVtYWlsIjoic29tY2hhaW1hZGVlQGdtYWlsLmNvbSIsInJvbGUiOiJwcmVtaXVtIiwiaXNQcmVtaXVtIjoxLCJpYXQiOjE3NjIwOTU3MDksImV4cCI6MTc2MjA5NjYwOX0.4mvrPVNfsdpOoIXbQPZX0R5LMEVEEtRdTZ9WqgNd5gk",
+								"type": "text"
+							},
+							{
+								"key": "Idempotency-Key",
+								"value": "test-premium-1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Task (isPremium True)\",\r\n    \"description\": \"Testing creating a 'high' priority task.\",\r\n    \"priority\": \"high\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/tasks",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/auth/refresh",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsInRva2VuSWQiOiI5NzI5NTAzNDZhMWQ3NjM1NWQ4MTliYjc2NjZmZTlmODBiNjg5MjMzZGQ5NzVkNTk5NzdjM2EwMjNlZDM2N2I0IiwiaWF0IjoxNzYyMDk0ODA2LCJleHAiOjE3NjI2OTk2MDZ9.mmoT7X19T7KxxKiq8LyBb6nKKET7A774IR2yV2eNC_E\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/auth/refresh",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rate Limiting",
+			"item": [
+				{
+					"name": "Anonymous",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"maneejaide@gmail.com\",\r\n    \"password\": \"password123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoic29tc3VramFpZGVAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpc1ByZW1pdW0iOjAsImlhdCI6MTc2MjE2NzY1NSwiZXhwIjoxNzYyMTY4NTU1fQ.OGoIRt6W5EUG4LS_nrulemrbgsWfCdDyOqmfqKmr0Xk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/v1/users/me",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Premium",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImVtYWlsIjoic29tY2hhaW1hZGVlQGdtYWlsLmNvbSIsInJvbGUiOiJwcmVtaXVtIiwiaXNQcmVtaXVtIjoxLCJpYXQiOjE3NjIxNjc3MTEsImV4cCI6MTc2MjE2ODYxMX0._kDOeAXGv_5Qs2GJNSsGgMvxf27cAjkZPJ7CkuixYMo",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/v1/users/me",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Error Handling",
+			"item": [
+				{
+					"name": "400",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsImVtYWlsIjoibWFuZWVqYWlkZUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlzUHJlbWl1bSI6MCwiaWF0IjoxNzYyMTY4MTMwLCJleHAiOjE3NjIxNjkwMzB9.AK9MyvlFXPEoJIe4oXVpNcj-Fn_0YXX8C7ZZbZJ9cUg",
+								"type": "text"
+							},
+							{
+								"key": "Idempotency-Key",
+								"value": "test-123",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"priority\": \"low\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/tasks",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "401",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/users/me",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "403",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsImVtYWlsIjoibWFuZWVqYWlkZUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlzUHJlbWl1bSI6MCwiaWF0IjoxNzYyMTY4MTMwLCJleHAiOjE3NjIxNjkwMzB9.AK9MyvlFXPEoJIe4oXVpNcj-Fn_0YXX8C7ZZbZJ9cUg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/v1/users",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "404",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsImVtYWlsIjoibWFuZWVqYWlkZUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlzUHJlbWl1bSI6MCwiaWF0IjoxNzYyMTY4MTMwLCJleHAiOjE3NjIxNjkwMzB9.AK9MyvlFXPEoJIe4oXVpNcj-Fn_0YXX8C7ZZbZJ9cUg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/v1/tasks/99999",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"tasks",
+								"99999"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
